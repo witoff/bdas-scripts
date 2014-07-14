@@ -54,8 +54,8 @@ def parse_args():
       help="Key pair to use on instances")
   parser.add_option("-i", "--identity-file",
       help="SSH private key file to use for logging into instances")
-  parser.add_option("-t", "--instance-type", default="m1.xlarge",
-      help="Type of instance to launch (default: m1.large). " +
+  parser.add_option("-t", "--instance-type", default="m3.xlarge",
+      help="Type of instance to launch (default: m3.large). " +
            "WARNING: must be 64-bit; small instances won't work")
   parser.add_option("-m", "--master-instance-type", default="",
       help="Master instance type (leave empty for same as instance-type)")
@@ -589,6 +589,10 @@ def get_num_disks(instance_type):
     "m2.xlarge":   1,
     "m2.2xlarge":  1,
     "m2.4xlarge":  2,
+    "m3.medium":  1,
+    "m3.large":  1,
+    "m3.xlarge":  2,
+    "m3.2xlarge":  2,
     "cc1.4xlarge": 2,
     "cc2.8xlarge": 4,
     "cg1.4xlarge": 2
@@ -613,6 +617,10 @@ def get_num_cpus(instance_type):
     "m2.xlarge":   2,
     "m2.2xlarge":  4,
     "m2.4xlarge":  8,
+    "m3.medium":  1,
+    "m3.large":  2,
+    "m3.xlarge":  4,
+    "m3.2xlarge":  8,
     "cc1.4xlarge": 8,
     "cc2.8xlarge": 16,
     "cg1.4xlarge": 8
