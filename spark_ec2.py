@@ -78,6 +78,8 @@ def parse_args():
       help="Attach a new EBS volume of size SIZE (in GB) to each node as " +
            "/vol. The volumes will be deleted when the instances terminate. " +
            "Only possible on EBS-backed AMIs.")
+  parser.add_option("--root-vol-size", type="int", default=0,
+      help="Set the size of your root EBS volume.  Generally defaults to 8.")
   parser.add_option("--swap", metavar="SWAP", type="int", default=1024,
       help="Swap space to set up per node, in MB (default: 1024)")
   parser.add_option("--spot-price", metavar="PRICE", type="float",
@@ -245,6 +247,12 @@ def launch_cluster(conn, opts, cluster_name):
     device.size = opts.ebs_vol_size
     device.delete_on_termination = True
     block_map["/dev/sdv"] = device
+  if opts.root_vol_size > 0:
+    device = EBSBlockDeviceType()
+    device.size = opts.root_vol_size
+    device.delete_on_termination = True
+    block_map["/dev/sda1"] = device
+
 
   # Launch slaves
   if opts.spot_price != None:
